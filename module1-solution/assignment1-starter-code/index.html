@@ -4,29 +4,40 @@
     <title>Lunch Checker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <style>
-      .message { font-size: 1.3em; font-weight: bold; }
-    </style>
-  </head>
-  <script> 
+      <style>
 
-  </script>
-<body  ng-app="LunchCheck">
-   <div class="container">
-     <h1>Lunch Checker</h1>
+    .message { font-size: 1.3em; font-weight: bold; }
 
-         <div class="form-group">
-             <input id="lunch-menu" type="text"
-             placeholder="list comma separated dishes you usually have for lunch"
-             class="form-control">
-         </div>
-         <div class="form-group">
-             <button class="btn btn-default">Check If Too Much</button>
-         </div>
-         <div class="form-group message">
-           <!-- Your message can go here. -->
-         </div>
-   </div>
+    .message-green {
+      color: green;
+    }
 
+    .message-red {
+      color: red;
+    }
+
+    .input-green {
+      border: 2px solid green;
+    }
+
+    .input-red {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body ng-controller="LunchCheckController">
+  <div class="container">
+    <h2>Lunch Checker</h2>
+    <input type="text"
+           ng-model="lunchItems"
+           placeholder="List comma separated lunch items"
+           ng-class="borderClass">
+    <!-- Note: Empty items (i.e., ,,) are NOT counted as items -->
+    <button ng-click="checkLunch()">Check If Too Much</button>
+    <p ng-class="messageClass">{{message}}</p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
