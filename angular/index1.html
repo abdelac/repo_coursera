@@ -6,12 +6,15 @@
         <script src="app.js">    </script>
     <title></title>
   </head>
-  <body ng-app='msg'>
+  <body ng-app='calcule'>
 
-    <h1>this is my first DI</h1>
-<div ng-controller="msgcontroller">
-  <button ng-click="sw()">Changer</button><br>
-  <img ng-src="image/new_{{sc}}.jpg">
+    <h1>this is my first app</h1>
+
+<div ng-controller='calculecontrolle'>
+
+<input type="text" ng-keyup="display();" ng-model="name"><br>
+
+the  total numeric value is :{{value}}
 </div>
 
 
