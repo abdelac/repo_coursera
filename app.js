@@ -1,58 +1,64 @@
 (function () {
 'use strict';
 
-angular.module('ShoppingListApp', [])
-.controller('ShoppingListAddController', ShoppingListAddController)
-.controller('ShoppingListShowController', ShoppingListShowController)
-.service('ShoppingListService', ShoppingListService);
-
-ShoppingListAddController.$inject = ['ShoppingListService'];
-function ShoppingListAddController(ShoppingListService) {
-  var itemAdder = this;
-
-  itemAdder.itemName = "";
-  itemAdder.itemQuantity = "";
-
-  itemAdder.addItem = function () {
-    ShoppingListService.addItem(itemAdder.itemName, itemAdder.itemQuantity);
-  }
-}
+angular.module('MenuCategoriesApp', [])
+.controller('MenuCategoriesController', MenuCategoriesController)
+.service('MenuCategoriesService', MenuCategoriesService)
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
 
 
-ShoppingListShowController.$inject = ['ShoppingListService'];
-function ShoppingListShowController(ShoppingListService) {
-  var showList = this;
+MenuCategoriesController.$inject = ['MenuCategoriesService'];
+function MenuCategoriesController(MenuCategoriesService) {
+  var menu = this;
 
-  showList.items = ShoppingListService.getItems();
+  var promise = MenuCategoriesService.getMenuCategories();
 
-  showList.removeItem = function (itemIndex) {
-    ShoppingListService.removeItem(itemIndex);
+  promise.then(function (response) {
+    menu.categories = response.data;
+  })
+  .catch(function (error) {
+    console.log("Something went terribly wrong.");
+  });
+
+  menu.logMenuItems = function (shortName) {
+    var promise = MenuCategoriesService.getMenuForCategory(shortName);
+
+    promise.then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
   };
+
 }
 
 
-function ShoppingListService() {
+MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
+function MenuCategoriesService($http, ApiBasePath) {
   var service = this;
 
-  // List of shopping items
-  var items = [];
+  service.getMenuCategories = function () {
+    var response = $http({
+      method: "GET",
+      url: (ApiBasePath + "/categories.json")
+    });
 
-  service.addItem = function (itemName, quantity) {
-    var item = {
-      name: itemName,
-      quantity: quantity
-    };
-    items.push(item);
+    return response;
   };
 
-  service.removeItem = function (itemIndex) {
-    items.splice(itemIndex, 1);
-  };
 
-  service.getItems = function () {
-    return items;
-  };
+  service.getMenuForCategory = function (shortName) {
+    var response = $http({
+      method: "GET",
+      url: (ApiBasePath + "/menu_items.json"),
+      params: {
+        category: shortName
+      }
+    });
 
+    return response;
+  };
 
 }
 
