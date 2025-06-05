@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html ng-app='MenuCategoriesApp'>
+<html ng-app='ShoppingListComponentApp'>
   <head>
     <meta charset="utf-8">
+    <script src="jquery-3.1.0.min.js"></script>
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Using $http Service</title>
+    <title>Shopping List With Components</title>
   </head>
   <body>
-    <h1>Using $http Service</h1>
+    <h1>Shopping List With Components</h1>
 
-    <div ng-controller='MenuCategoriesController as menu'>
-      <h3>List of Menu Categories</h3>
-      <ul>
-        <li ng-repeat="category in menu.categories">
-          (<a href="" ng-click="menu.logMenuItems(category.short_name);">{{ category.short_name }}</a>)
-          {{ category.name }}
-        </li>
-      </ul>
+    <div id="list" ng-controller='ShoppingListController as list'>
+      <input type="text" ng-model="list.itemName" placeholder="item name">
+      <input type="text" ng-model="list.itemQuantity" placeholder="quantity">
+      <button ng-click="list.addItem();">Add Item</button>
+      <span>{{ list.lastRemoved }}</span>
+
+      <shopping-list
+        items="list.items"
+        title="{{list.title}}"
+        on-remove="list.removeItem(index)"></shopping-list>
+
     </div>
 
+    </div>
   </body>
 </html>
