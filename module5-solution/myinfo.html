@@ -1,0 +1,16 @@
+<div class="container" ng-if="myInfoCtrl.user">
+  <h2>My Info</h2>
+  <p><strong>First Name:</strong> {{myInfoCtrl.user.firstName}}</p>
+  <p><strong>Last Name:</strong> {{myInfoCtrl.user.lastName}}</p>
+  <p><strong>Email:</strong> {{myInfoCtrl.user.email}}</p>
+  <p><strong>Phone:</strong> {{myInfoCtrl.user.phone}}</p>
+  <div ng-if="myInfoCtrl.menuItem">
+    <h4>Favorite Dish</h4>
+    <p><strong>{{myInfoCtrl.menuItem.name}}</strong></p>
+    <p>{{myInfoCtrl.menuItem.description}}</p>
+    <img ng-src="{{myInfoCtrl.menuItem.imageUrl}}" alt="Dish image" class="img-thumbnail">
+  </div>
+</div>
+<div class="container" ng-if="!myInfoCtrl.user">
+  <h2>Not Signed Up Yet. <a href="#/signup">Sign up Now!</a></h2>
+</div>
